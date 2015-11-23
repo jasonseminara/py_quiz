@@ -18,7 +18,7 @@ def showHeader(title):
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
 
       <body>
-      <h2>{}</h2>
+      <h2>{0}</h2>
     """.format(title)
 
 def showFooter():
@@ -31,14 +31,14 @@ def showOption(qName,qValue,qText):
   return """
   <div class="radio">
     <label>
-        <input type="radio" name="q{}" value="{}">
-        {}
+        <input type="radio" name="q{0}" value="{1}">
+        {2}
     </label>
   </div>
     """.format(qName,qValue,qText) 
 
 def showInput(typ,clss,value,name):
-  return """<input type="{}" class="{}" value="{}" name={}>""".format(typ,clss,value,name)
+  return """<input type="{0}" class="{1}" value="{2}" name={3}>""".format(typ,clss,value,name)
   
 
 
@@ -47,7 +47,8 @@ def gradeQuiz(frm):
   print showHeader("Vocabulary Quiz Results")
  
   for qID in xrange(0,10):
-    results[int(frm.getvalue('a'+str(qID))==frm.getvalue('q'+str(qID)))].append(frm.getvalue('w'+str(qID)))
+    correct = frm.getvalue('a'+str(qID))==frm.getvalue('q'+str(qID))
+    results[ int(correct) ].append(frm.getvalue('w'+str(qID)))
   
   print '<h4>You got '+str(len(results[1]))+' of '+ str(len(results[0])+len(results[1])) +' answers correct.</h4>'
 
@@ -58,7 +59,7 @@ def gradeQuiz(frm):
     <th>Correct</th><th>Incorrect</th>
   </tr>
   <tr>
-    <td class="success">{}</td><td class="danger">{}</td> 
+    <td class="success">{0}</td><td class="danger">{1}</td> 
   </tr>
 </table>
 </div>
@@ -78,6 +79,11 @@ if 'submitted' in form:
 
 
 # We haven't been here before
+
+
+words = {}
+questions =[]
+
 
 # read the file, line-by-line
 for word in f.readlines():
@@ -145,7 +151,7 @@ for answer in xrange(0,len(questions),4):
 
 print """
       </ol>
-    <input name="submitted" type="submit" value="Grade" class="btn btn-primary btn-lg" >
+      <input name="submitted" type="submit" value="Grade" class="btn btn-primary btn-lg" >
 """
 
 print showFooter()
