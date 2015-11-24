@@ -63,7 +63,7 @@ def gradeQuiz(frm):
   </tr>
 </table>
 </div>
-'''.format( reduce(insertBreaks, results[1]),reduce(insertBreaks, results[0]) )
+'''.format( reduce(insertBreaks, results[1],''),reduce(insertBreaks, results[0],'') )
   print showFooter()
 
 
